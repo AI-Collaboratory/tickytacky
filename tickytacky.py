@@ -21,6 +21,11 @@ def main():
 def process(img_loc):
     img = cv2.imread(img_loc)
     height, width = img.shape[:2]
+
+    # Skip smaller images
+    if height < 350 or width < 350:
+        return (None, None)
+
     scaled_width = 1000
     scaled_height = height/width * scaled_width
     res = cv2.resize(img, (1000, scaled_height), interpolation=cv2.INTER_AREA)
@@ -32,7 +37,7 @@ def process(img_loc):
     vlines = [l for l in cv2.HoughLines(thresh, 1, np.pi/2, 250)[0] if l[1] == 0]
     hlines = [l for l in cv2.HoughLines(thresh, 1, np.pi/2, 360)[0]
               if (np.pi/2+.3) > l[1] > np.pi/2-.3]
-    logging.info("vertical lines: {0}\nhorizontal lines: {1}".format(len(vlines), len(hlines)))
+    logging.info("vertical lines: {0}  horizontal lines: {1}".format(len(vlines), len(hlines)))
 
     # Remove lines close to edge of image
     x_margin = thresh.shape[0] * .08
@@ -75,13 +80,13 @@ def process(img_loc):
     vertical_line_offsets = []
     for rho, theta in my_vlines:
         # make list of normalized line offsets from center
-        vertical_line_offsets.append(rho)
+        vertical_line_offsets.append(int(rho))
         # drawline(rho, theta, res)
 
     horiz_line_offsets = []
     for rho, theta in my_hlines:
         # make list of normalized line offsets from center
-        horiz_line_offsets.append(rho)
+        horiz_line_offsets.append(int(rho))
         # drawline(rho, theta, res)
 
     # cv2.imshow(img_loc, res)

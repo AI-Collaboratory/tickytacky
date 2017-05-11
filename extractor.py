@@ -29,7 +29,7 @@ class TickyTackyExtractor(Extractor):
         file_id = resource['id']
         logger.info("Got a process_file request: "+inputfile)
 
-        (horiz_line_offsets, vertical_line_offsets, height, width) = process(inputfile)
+        (horiz_line_offsets, vertical_line_offsets) = process(inputfile)
 
         result = {}  # assertions about the file
         if vertical_line_offsets is not None:

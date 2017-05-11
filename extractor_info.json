@@ -14,7 +14,7 @@
   "repository": [
     {
       "repType": "git",
-      "repUrl": "https://opensource.ncsa.illinois.edu/bitbucket/scm/cats/extractors-siegfried.git"
+      "repUrl": "https://github.com/UMD-DCIC/tickytacky.git"
     },
     {
       "repType": "docker",
