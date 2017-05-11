@@ -1,0 +1,32 @@
+{
+  "@context": "http://clowder.ncsa.illinois.edu/contexts/extractors.jsonld",
+  "name": "tickytacky",
+  "version": "2.0",
+  "description": "TickyTacky scanned form recognition extractor. Creates numeric description of vertical and horizontal line arrangement.",
+  "author": "Greg Jansen <jansen@umd.edu>",
+  "contributors": [],
+  "contexts": [
+    {
+      "vertical_lines": "http://dcic.umd.edu/2017/tickytacky/vertical_lines",
+      "horizontal_lines": "http://dcic.umd.edu/2017/tickytacky/horizontal_lines"
+    }
+  ],
+  "repository": [
+    {
+      "repType": "git",
+      "repUrl": "https://opensource.ncsa.illinois.edu/bitbucket/scm/cats/extractors-siegfried.git"
+    },
+    {
+      "repType": "docker",
+      "repUrl": "clowder/extractors-tickytacky"
+    }
+  ],
+  "process": {
+    "file": [
+      "image/*"
+    ]
+  },
+  "external_services": [],
+  "dependencies": [],
+  "bibtex": []
+}
