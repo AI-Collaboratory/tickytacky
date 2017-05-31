@@ -1,8 +1,6 @@
 import cv2
 import numpy as np
 import logging
-# from os import listdir
-# from os.path import isfile, join
 
 
 def main():
@@ -19,6 +17,7 @@ def main():
 
 
 def process(img_loc):
+    # logging.warn('Processing {0}'.format(img_loc))
     img = cv2.imread(img_loc)
     height, width = img.shape[:2]
 
@@ -26,9 +25,12 @@ def process(img_loc):
     if height < 350 or width < 350:
         return (None, None)
 
-    scaled_width = 1000
-    scaled_height = height/width * scaled_width
-    res = cv2.resize(img, (1000, scaled_height), interpolation=cv2.INTER_AREA)
+    scaled_width = float(1000)
+    # logging.warn("height {0}, width {1}".format(height, width))
+    # height/width = X/1000
+    scaled_height = int(float(height)/width * scaled_width)
+    # logging.warn('scaled height {0}'.format(scaled_height))
+    res = cv2.resize(img, (1000, scaled_height))  # , interpolation=cv2.INTER_AREA)
     gray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY_INV)
     # cv2.imshow('threshold', thresh)
@@ -37,7 +39,7 @@ def process(img_loc):
     vlines = [l for l in cv2.HoughLines(thresh, 1, np.pi/2, 250)[0] if l[1] == 0]
     hlines = [l for l in cv2.HoughLines(thresh, 1, np.pi/2, 360)[0]
               if (np.pi/2+.3) > l[1] > np.pi/2-.3]
-    logging.info("vertical lines: {0}  horizontal lines: {1}".format(len(vlines), len(hlines)))
+    # logging.info("vertical lines: {0}  horizontal lines: {1}".format(len(vlines), len(hlines)))
 
     # Remove lines close to edge of image
     x_margin = thresh.shape[0] * .08
