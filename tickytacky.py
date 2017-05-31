@@ -80,19 +80,31 @@ def process(img_loc):
     # my_hlines.append(b_border)
 
     vertical_line_offsets = []
+    last_rho = 0
     for rho, theta in my_vlines:
         # make list of normalized line offsets from center
+        if abs(last_rho - rho) <= 3:
+            continue
         vertical_line_offsets.append(int(rho))
-        # drawline(rho, theta, res)
+        drawline(rho, theta, res)
+        last_rho = rho
 
+    last_rho = 0
     horiz_line_offsets = []
     for rho, theta in my_hlines:
         # make list of normalized line offsets from center
+        if abs(last_rho - rho) <= 3:
+            continue
         horiz_line_offsets.append(int(rho))
-        # drawline(rho, theta, res)
+        drawline(rho, theta, res)
+        last_rho = rho
 
     # cv2.imshow(img_loc, res)
-    # cv2.imwrite('output/'+img_loc, res)
+    import os
+    output = 'output/'+os.path.basename(img_loc)
+    if os.path.exists(output):
+        os.remove('output/'+os.path.basename(img_loc))
+    cv2.imwrite('output/'+os.path.basename(img_loc), res)
     # print(vertical_line_offsets)
     # print(horiz_line_offsets)
 
@@ -119,7 +131,7 @@ def drawline(rho, theta, img):
     y1 = int(y0 + 1000*(a))
     x2 = int(x0 - 1000*(-b))
     y2 = int(y0 - 1000*(a))
-    cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 1)
+    cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
 
 if __name__ == '__main__':

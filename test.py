@@ -19,7 +19,7 @@ def mydistance(a, b):
     return dist
 
 index = {}
-onlyfiles = [f for f in listdir('images') if isfile(join('images', f))]
+onlyfiles = [f for f in sorted(listdir('images')) if isfile(join('images', f))]
 samples = np.zeros((len(onlyfiles), 16))
 for idx, f in enumerate(onlyfiles):
     index[idx] = f
@@ -40,7 +40,7 @@ for x in samples:
 for x in scaled:
     print('{0}'.format(x))
 
-labels = DBSCAN(eps=.002, min_samples=2, metric=mydistance).fit_predict(scaled)
+labels = DBSCAN(eps=.8, min_samples=2, metric=mydistance).fit_predict(scaled)
 
 for idx, label in enumerate(labels):
     f = index[idx]
